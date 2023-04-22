@@ -6,9 +6,10 @@ import CategoryFilter from "./CategoryFilter";
 
 function App() {
   const [tasks, setTasks] = useState([
-    { id: 1, text: "Task 1", category: "Work" },
-    { id: 2, text: "Task 2", category: "Personal" },
-    { id: 3, text: "Task 3", category: "Work" },
+    { id: 1, text: "Build a Webpage for my Game", category: "Work" },
+    { id: 2, text: "Play Games", category: "Personal" },
+    { id: 3, text: "Mentor students", category: "Work" },
+    { id: 4, text: "Rest", category: "Personal" },
   ]);
 
   const categories = [...new Set(tasks.map((task) => task.category))];
