@@ -1,60 +1,39 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 function NewTaskForm({ categories, onTaskFormSubmit }) {
-  const [formData, setFormData] = useState({
-    text: "",
-    category: categories[0],
-  });
+  const [text, setText] = useState('');
+  const [category, setCategory] = useState(categories[0]);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onTaskFormSubmit({ text, category });
+    setText('');
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    onTaskFormSubmit(formData);
-    setFormData({ text: "", category: categories[0] });
+  const handleTextChange = (e) => {
+    setText(e.target.value);
   };
 
-  const categoryOptions = categories
-    .filter((category) => category !== "All")
-    .map((category) => (
-      <option key={category} value={category}>
-        {category}
-      </option>
-    ));
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  };
 
   return (
-    <form className="new-task-form" onSubmit={handleSubmit}>
-      <label>
-        Details
-        <input
-          type="text"
-          name="text"
-          value={formData.text}
-          onChange={handleInputChange}
-        />
-      </label>
-      <label>
-        Category
-        <select
-          name="category"
-          value={formData.category}
-          onChange={handleInputChange}
-        >
-          <option key="All" value="All">
-            All
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="text">Task:</label>
+      <input id="text" type="text" value={text} onChange={handleTextChange} />
+      <label htmlFor="category">Category:</label>
+      <select id="category" value={category} onChange={handleCategoryChange}>
+        {categories.slice(1).map((category) => (
+          <option key={category} value={category}>
+            {category}
           </option>
-          {categoryOptions}
-        </select>
-      </label>
-      <input type="submit" value="Add task" />
+        ))}
+      </select>
+      <button type="submit">Add Task</button>
     </form>
   );
 }
 
 export default NewTaskForm;
+
